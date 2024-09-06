@@ -28,8 +28,10 @@
       - name: create branch
         run: git checkout -b ${{ steps.vars.outputs.sha_short }}
           
-      - name: echo test 
-        run:  echo 'hi' >> README.md
+      - name: Set versiom in values
+        uses: mikefarah/yq@master
+        with:
+          cmd: yq -i 'nginx_image_version = "1.0.0"' 'argocd/stage/luxplus/gb/Values.yaml'
 
       - name: git add, configure author, commit and push
         run: |
