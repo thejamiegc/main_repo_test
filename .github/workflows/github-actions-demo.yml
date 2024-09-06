@@ -25,10 +25,12 @@
       - name: echo test 
         run:  echo hi >> README.md
 
-      - name: git add and commit
+      - name: git add, set author and commit
         run: |
           git add README.md
-          git commit --author="githubactions <>" -m "update -version ???"
+          git config user.name "GitHubActions"
+          git config user.email "<>"
+          git commit -m "update -version ???"
       
       - name: setup PR with new version for images 
         run: gh pr create --title 'titlevar' --body 'bodyvar' --base main
