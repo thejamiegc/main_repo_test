@@ -26,7 +26,7 @@
           valueFile: 'argocd/stage/luxplus/be/Values.yaml' 
           propertyPath: 'phpfpm_image_version'
           value: '0.0.1'
-          # branch: main/thisshouldbevar
-          # targetBranch: main
-          # createPR: true
-          # message: 'Update Image Version to' 
+          branch: main/thisshouldbevar
+          targetBranch: main
+          createPR: true
+          message: 'Update Image Version to' 
