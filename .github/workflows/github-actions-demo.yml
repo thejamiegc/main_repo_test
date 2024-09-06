@@ -18,9 +18,15 @@
   
       - name: Expose GitHub Runtime
         uses: crazy-max/ghaction-github-runtime@v3
+
+      - name: Set outputs
+        id: vars
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+      - name: Check outputs
+        run: echo ${{ steps.vars.outputs.sha_short }}
       
       - name: create branch
-        run: git checkout -b branch
+        run: git checkout -b ${{ steps.vars.outputs.sha_short }}
           
       - name: echo test 
         run:  echo hi >> README.md
@@ -31,7 +37,7 @@
           git config user.name "GitHubActions"
           git config user.email "<>"
           git commit -m "update -version ???"
-          git push --set-upstream origin branch
+          git push --set-upstream origin ${{ steps.vars.outputs.sha_short }}
       
       - name: setup PR with new version for images 
         run: gh pr create --title 'titlevar' --body 'bodyvar' --base main
