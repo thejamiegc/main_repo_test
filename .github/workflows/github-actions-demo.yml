@@ -31,7 +31,7 @@
           git config user.name "GitHubActions"
           git config user.email "<>"
           git commit -m "update -version ???"
-          git push 
+          git push --set-upstream origin ${{ github.sha }}
       
       - name: setup PR with new version for images 
         run: gh pr create --title 'titlevar' --body 'bodyvar' --base main
