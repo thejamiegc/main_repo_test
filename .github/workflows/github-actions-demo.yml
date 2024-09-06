@@ -19,9 +19,17 @@
       - name: Expose GitHub Runtime
         uses: crazy-max/ghaction-github-runtime@v3
       
+      - name: create branch
+        run: git checkout -b ${{ github.sha }}
+          
       - name: echo test 
         run:  echo hi >> README.md
 
+      - name: git add and commit
+        run: |
+          git add README.md
+          git commit -m "update version ???"
+      
       - name: setup PR with new version for images 
         run: gh pr create --title 'titlevar' --body 'bodyvar' --base main
         env: 
