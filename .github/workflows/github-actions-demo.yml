@@ -28,6 +28,7 @@
       - name: git add and commit
         run: |
           git add README.md
+          git commit --author="githubactions <>" -m "update -version ???"
       
       - name: setup PR with new version for images 
         run: gh pr create --title 'titlevar' --body 'bodyvar' --base main
