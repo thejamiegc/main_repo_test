@@ -31,7 +31,7 @@
       - name: Set versiom in values
         uses: mikefarah/yq@master
         with:
-          cmd: yq -i 'nginx_image_version = "1.0.0"' 'argocd/stage/luxplus/gb/Values.yaml'
+          cmd: yq -i '.nginx_image_version = "1.0.0"' 'argocd/stage/luxplus/gb/Values.yaml'
 
       - name: git add, configure author, commit and push
         run: |
