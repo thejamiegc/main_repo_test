@@ -29,16 +29,21 @@
       - name: Set version in values
         if: github.event_name == 'push' && !startsWith(github.ref, 'refs/tags/')
         run: |
-            yq -i '.phpfpm_image_version= "${{steps.vars.outputs.sha_short}}"' 'argocd/stage/luxplus/gb/Values.yaml'
-            yq -i '.nginx_image_version = "${{steps.vars.outputs.sha_short}}"' 'argocd/stage/luxplus/gb/Values.yaml'
+            for folder in argocd/stage/luxplus/* 
+            do
+            echo "$folder"
+            yq -i '.phpfpm_image_version= "${{steps.vars.outputs.sha_short}}"' "$folder"'/Values.yaml'
+            yq -i '.nginx_image_version = "${{steps.vars.outputs.sha_short}}"' "$folder"'/Values.yaml'
+            done
 
       - name: Set version in values
         if: startsWith(github.ref, 'refs/tags/')
-        uses: mikefarah/yq@master
-        with:
-          cmd: |
-            yq -i '.phpfpm_image_version= "${{github.ref_name}}"' 'argocd/production/luxplus/gb/Values.yaml'
-            yq -i '.nginx_image_version = "${{github.ref_name}}"' 'argocd/production/luxplus/gb/Values.yaml'
+        run: |
+            for folder in argocd/stage/luxplus/* 
+            do
+            yq -i '.phpfpm_image_version= "${{github.ref_name}}"' '$folder/Values.yaml'
+            yq -i '.nginx_image_version = "${{github.ref_name}}"' '$folder/Values.yaml'
+            done
           
       - name: git add, configure author, commit and push
         run: |
@@ -55,4 +60,3 @@
           gh pr merge --rebase 
         env: 
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
