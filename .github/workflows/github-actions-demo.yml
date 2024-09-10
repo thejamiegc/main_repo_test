@@ -33,20 +33,21 @@
         uses: mikefarah/yq@master
         with:
           cmd: |
-            yq -i '.phpfpm_image_version= "1.0.2"' 'argocd/stage/luxplus/gb/Values.yaml'
-            yq -i '.nginx_image_version = "1.0.2"' 'argocd/stage/luxplus/gb/Values.yaml'
+            yq -i '.phpfpm_image_version= "${{steps.vars.outputs.sha_short}}"' 'argocd/stage/luxplus/gb/Values.yaml'
+            yq -i '.nginx_image_version = "${{steps.vars.outputs.sha_short}}"' 'argocd/stage/luxplus/gb/Values.yaml'
 
       - name: Set version in values
         if: startsWith(github.ref, 'refs/tags/')
         uses: mikefarah/yq@master
         with:
           cmd: |
-            yq -i '.phpfpm_image_version= "1.0.2"' 'argocd/production/luxplus/gb/Values.yaml'
-            yq -i '.nginx_image_version = "1.0.2"' 'argocd/production/luxplus/gb/Values.yaml'
+            yq -i '.phpfpm_image_version= "${{github.ref}}"' 'argocd/production/luxplus/gb/Values.yaml'
+            yq -i '.nginx_image_version = "${{github.ref}}"' 'argocd/production/luxplus/gb/Values.yaml'
           
       - name: git add, configure author, commit and push
         run: |
-          git add argocd
+          git add argocd/stage
+          git add argocd/production
           git config user.name "GitHubActions"
           git config user.email "<>"
           git commit -m "update -version ???"
