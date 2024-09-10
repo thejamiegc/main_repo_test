@@ -33,8 +33,8 @@
         uses: mikefarah/yq@master
         with:
           cmd: |
-            yq -i '.phpfpm_image_version= "1.0.1"' 'argocd/stage/luxplus/gb/Values.yaml'
-            yq -i '.nginx_image_version = "1.0.1"' 'argocd/stage/luxplus/gb/Values.yaml'
+            yq -i '.phpfpm_image_version= "1.0.2"' 'argocd/stage/luxplus/gb/Values.yaml'
+            yq -i '.nginx_image_version = "1.0.2"' 'argocd/stage/luxplus/gb/Values.yaml'
           
       - name: git add, configure author, commit and push
         run: |
