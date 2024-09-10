@@ -48,12 +48,18 @@
           git add argocd/production
           git config user.name "GitHubActions"
           git config user.email "<>"
-          git commit -m "update image version ${{github.ref_name}}"
+          git commit -m "updated image version"
           git push --set-upstream origin ${{ steps.vars.outputs.sha_short }}
       
       - name: setup PR with new version for images 
         run: |
-          gh pr create --title 'titlevar' --body 'bodyvar' --base main
+          gh pr create --title 'update image version' --body 'this updates the image version' --base main
           gh pr merge --rebase 
         env: 
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: for loop
+        run: | 
+          for foldername in argocd/production/luxplus/*; do
+          echo "$filename"
+          done
