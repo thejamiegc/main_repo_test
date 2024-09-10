@@ -28,11 +28,14 @@
       - name: create branch
         run: git checkout -b ${{ steps.vars.outputs.sha_short }}
           
-      - name: Set versiom in values
+      - name: Set version in values
+        if: github.event_name == 'push' && !startsWith(github.ref, 'refs/tags/')
         uses: mikefarah/yq@master
         with:
-          cmd: yq -i '.nginx_image_version = "1.0.0"' 'argocd/stage/luxplus/gb/Values.yaml'
-
+          cmd: |
+            yq -i '.phpfpm_image_version= "1.0.1"' 'argocd/stage/luxplus/gb/Values.yaml'
+            yq -i '.nginx_image_version = "1.0.1"' 'argocd/stage/luxplus/gb/Values.yaml'
+          
       - name: git add, configure author, commit and push
         run: |
           git add argocd/stage
@@ -42,6 +45,8 @@
           git push --set-upstream origin ${{ steps.vars.outputs.sha_short }}
       
       - name: setup PR with new version for images 
-        run: gh pr create --title 'titlevar' --body 'bodyvar' --base main
+        run: |
+          gh pr create --title 'titlevar' --body 'bodyvar' --base main
+          gh pr merge --rebase 
         env: 
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
