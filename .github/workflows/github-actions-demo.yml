@@ -61,5 +61,5 @@
       - name: for loop
         run: | 
           for foldername in argocd/production/luxplus/*; do
-          echo "$filename"
+          echo "$foldername"
           done
