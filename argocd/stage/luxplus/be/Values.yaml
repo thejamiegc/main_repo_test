@@ -1,4 +1,4 @@
 phpfpm_image: registry.digitalocean.com/luxplus/luxplus-website-fpm
-phpfpm_image_version: 0.0.6
+phpfpm_image_version: f36283b
 nginx_image: registry.digitalocean.com/luxplus/luxplus-website-nginx
-nginx_image_version: 0.0.6
+nginx_image_version: f36283b
