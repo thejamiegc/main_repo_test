@@ -38,7 +38,7 @@
       - name: Set version in values
         if: startsWith(github.ref, 'refs/tags/')
         run: |
-            for folder in argocd/stage/luxplus/* 
+            for folder in argocd/production/luxplus/* 
             do
             yq -i '.phpfpm_image_version= "${{github.ref_name}}"' "$folder"'/Values.yaml'
             yq -i '.nginx_image_version = "${{github.ref_name}}"' "$folder"'/Values.yaml'
