@@ -31,7 +31,6 @@
         run: |
             for folder in argocd/stage/luxplus/* 
             do
-            echo "$folder"
             yq -i '.phpfpm_image_version= "${{steps.vars.outputs.sha_short}}"' "$folder"'/Values.yaml'
             yq -i '.nginx_image_version = "${{steps.vars.outputs.sha_short}}"' "$folder"'/Values.yaml'
             done
@@ -41,8 +40,8 @@
         run: |
             for folder in argocd/stage/luxplus/* 
             do
-            yq -i '.phpfpm_image_version= "${{github.ref_name}}"' '$folder/Values.yaml'
-            yq -i '.nginx_image_version = "${{github.ref_name}}"' '$folder/Values.yaml'
+            yq -i '.phpfpm_image_version= "${{github.ref_name}}"' "$folder"'/Values.yaml'
+            yq -i '.nginx_image_version = "${{github.ref_name}}"' "$folder"'/Values.yaml'
             done
           
       - name: git add, configure author, commit and push
