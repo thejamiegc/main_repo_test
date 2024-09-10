@@ -35,6 +35,14 @@
           cmd: |
             yq -i '.phpfpm_image_version= "1.0.2"' 'argocd/stage/luxplus/gb/Values.yaml'
             yq -i '.nginx_image_version = "1.0.2"' 'argocd/stage/luxplus/gb/Values.yaml'
+
+      - name: Set version in values
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: mikefarah/yq@master
+        with:
+          cmd: |
+            yq -i '.phpfpm_image_version= "1.0.2"' 'argocd/production/luxplus/gb/Values.yaml'
+            yq -i '.nginx_image_version = "1.0.2"' 'argocd/production/luxplus/gb/Values.yaml'
           
       - name: git add, configure author, commit and push
         run: |
